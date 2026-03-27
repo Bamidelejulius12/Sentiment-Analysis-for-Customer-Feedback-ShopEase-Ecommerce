@@ -88,6 +88,3 @@ def clean_data(data: pd.DataFrame):
         return data
     except Exception as e:
         logging.error(f"error occurred while cleaning data: {e}")
-
-
-data = clean_data(sentiment_data)

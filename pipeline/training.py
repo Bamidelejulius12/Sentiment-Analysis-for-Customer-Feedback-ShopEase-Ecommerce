@@ -1,0 +1,22 @@
+from src.data_preprocessing import Prepare_sentiment_data
+from src.model_training import ModelTraining
+from src.model_pusher import ModelPusher
+import logging
+
+def Train_model():
+    try:
+        train_dataset, test_dataset = Prepare_sentiment_data()
+        model = ModelTraining()
+        trainer = model.model_training(train_dataset=train_dataset, test_dataset=test_dataset)
+        results = model.model_evaluation(trainer)
+        print(results)
+        
+        # Push model to mlflow
+        pusher = ModelPusher()
+        pusher.updated_model_pusher(trainer, results)
+        return trainer, results 
+    except Exception as e:
+        logging.error(f"Pipeline error: {e}")
+
+if "__name__" == "__main__":
+    Train_model()

@@ -14,5 +14,4 @@ def data_ingestion():
     except Exception as e:
        logging.error(f"File to load the dataset ", e)
 
-# data_ingestion()
 

@@ -5,6 +5,10 @@ from sklearn.metrics import accuracy_score, f1_score
 from config.constant import training_args
 from src.data_preprocessing import Prepare_sentiment_data
 import logging
+from src.model_pusher import ModelPusher
+
+
+
 
 class ModelTraining:
     def __init__(self):
@@ -34,13 +38,3 @@ class ModelTraining:
     def model_evaluation(self, trainer):
         result = trainer.evaluate()
         return result
-
-def Train_model():
-    train_dataset, test_dataset = Prepare_sentiment_data()
-    model = ModelTraining()
-    trainer = model.model_training(train_dataset=train_dataset, test_dataset=test_dataset)
-    results = model.model_evaluation(trainer)
-    print(results)
-    return trainer, results
-
-Train_model()

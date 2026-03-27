@@ -80,8 +80,6 @@ def Prepare_sentiment_data():
     except Exception as e:
         logging.error(f"error occurred during data set processing {e}")
 
-Prepare_sentiment_data()
-        
     
 
 
