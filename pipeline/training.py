@@ -17,6 +17,3 @@ def Train_model():
         return trainer, results 
     except Exception as e:
         logging.error(f"Pipeline error: {e}")
-
-if "__name__" == "__main__":
-    Train_model()

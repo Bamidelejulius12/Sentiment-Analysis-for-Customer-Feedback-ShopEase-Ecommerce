@@ -1,0 +1,6 @@
+review_id,product_category,timestamp,country,rating,review
+1,Books,2023-01-01,GB,3,Solid build attractive design works as advertised Love it
+2,Toys,2023-01-01,DE,5,Ich liebe dieses Produkt
+3,Beauty,2023-01-01,AU,3,Three stars meets minimum expectations
+4,Electronics,2023-01-01,US,1,This product is bad i hate it
+5,Clothing,2023-01-01,FR,4,Très bien mais un peu cher
