@@ -1,4 +1,3 @@
-# main/app.py
 import logging
 from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
@@ -7,29 +6,36 @@ import io
 import numpy as np
 from pipeline.prediction import predict_sentiment
 from pipeline.training import Train_model
+from functools import lru_cache
 
-# ---------- CONFIG ----------
+# CONFIG
 logging.basicConfig(level=logging.INFO)
 
-# ---------- FASTAPI APP ----------
+# FASTAPI APP
 app = FastAPI(title="ShopEase Sentiment API")
 
-# ---------- Pydantic Schemas ----------
+# Pydantic Schemas
 class TextRequest(BaseModel):
     text: str
 
-# ---------- LOAD MODEL ON STARTUP ----------
-predictor = predict_sentiment()
+
+@lru_cache(maxsize=1)
+def get_predictor():
+    from pipeline.prediction import predict_sentiment
+    return predict_sentiment()
+
+# LOAD MODEL ON STARTUP
+predictor = get_predictor()
 logging.info("Model loaded successfully")
 
-# ---------- PREDICTION ROUTE ----------
+# PREDICTION ROUTE
 @app.post("/predict")
 def predict_text(request: TextRequest):
     result = predictor.predict(request.text)
     top_label = max(result, key=lambda x: x['score'])
     return {"label": top_label['label'], "confidence": float(top_label['score'])}
 
-# ---------- BATCH PREDICTION ROUTE ----------
+# BATCH PREDICTION ROUTE
 @app.post("/predict/batch")
 async def predict_batch(file: UploadFile = File(...)):
     """Upload CSV with 'review' column, get back predictions as table"""
